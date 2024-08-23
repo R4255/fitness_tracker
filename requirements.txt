@@ -10,3 +10,8 @@ tzdata==2024.1
 urllib3==2.2.2
 gunicorn
 psycopg2-binary==2.9.1
+dj-database-url
+whitenoise
+django-allauth==0.61.0
+django-widget-tweaks==1.5.0
+python-dotenv==1.0.0
