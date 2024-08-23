@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h2 class="text-center mb-4">Your Fitness Journey</h2>
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Recent Workouts</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for workout in workouts %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-running mr-2"></i>
+                                <strong>{{ workout.name }}</strong>
+                                <small class="text-muted ml-2">{{ workout.date|date:"M d, Y" }}</small>
+                            </div>
+                            <div>
+                                <span class="badge badge-primary badge-pill mr-2">{{ workout.duration }} min</span>
+                                <a href="{% url 'delete_workout' workout.pk %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center">
+                            <p class="mb-0">No workouts added yet. Start your fitness journey today!</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'add_workout' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus-circle mr-2"></i>Add New Workout
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Informative Section -->
+    <div class="row mt-5">
+        <div class="col-lg-8 offset-lg-2">
+            <h3 class="text-center mb-4">Informative Content</h3>
+            <div class="row">
+                <!-- Image Card -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <img src="{% static 'images/bmi.jpg' %}" class="card-img-top" alt="BMI Information">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-4"> It's important to maintain a healthy BMI to reduce health risks.</h5>
+                            <p class="card-text">
+                                
+                            </p>
+                            <div class="text-center mt-4">
+                                <a href="{% url 'calculate_bmi' %}" class="btn btn-primary btn-lg">
+                                    Calculate Your BMI
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Thumbnail Card -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <img src="https://img.youtube.com/vi/kuUZYUBHryw/0.jpg" class="card-img-top" alt="Hydration is the Key">
+                        <div class="card-body">
+                            <h5 class="card-title">Calisthenics For Beginner</h5>
+                            <p class="card-text">Watch the video to learn about Calisthenics</p>
+                            <a href="https://youtu.be/kuUZYUBHryw?si=2ww93QBffMlrceyG" class="btn btn-primary">Watch Video</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Card -->
+            {% comment %} <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Blog by John Doe</h5>
+                    <p class="card-text">Read insights from John Doe, a renowned fitness expert, on maintaining a healthy lifestyle.</p>
+                    <a href="https://example.com/blog" class="btn btn-primary">Read More</a>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    background: linear-gradient(to right, #007bff, #00c6ff);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.main-content {
+    min-height: calc(100vh - 56px - 62px);
+    padding: 20px 0;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.footer {
+    background: linear-gradient(to right, #007bff, #00c6ff);
+}
+
+@media (max-width: 768px) {
+    .col-lg-6.offset-lg-3,
+    .col-lg-8.offset-lg-2 {
+        padding: 0 15px;
+    }
+}
+.workout-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.workout-form button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.workout-form button:hover {
+    background-color: #0056b3;
+}
