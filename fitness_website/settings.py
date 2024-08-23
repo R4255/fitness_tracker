@@ -1,4 +1,5 @@
 from pathlib import Path
+import dj_database_url
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -88,7 +89,7 @@ WSGI_APPLICATION = "fitness_website.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
