@@ -5,6 +5,10 @@ from .forms import WorkoutForm,DietForm
 from django.http import HttpResponse
 from datetime import timedelta
 from django.utils import timezone
+from django.contrib import messages
+import logging
+logger = logging.getLogger(__name__)
+
 
 @login_required
 def index(request):
@@ -45,24 +49,22 @@ def calculate_bmi(request):
 def calory_track(request):
     user = request.user
     today = timezone.localtime().date()
-    week_start = today - timedelta(days=today.weekday())  # Monday of the current week
+    week_start = today - timedelta(days=today.weekday())
 
-    # Weekly intake
     weekly_diet_entries = Diet.objects.filter(user=user, date__gte=week_start)
     weekly_totals = {
-        'calories': sum(entry.calories for entry in weekly_diet_entries),
-        'carbohydrates': sum(entry.carbohydrates for entry in weekly_diet_entries),
-        'protein': sum(entry.protein for entry in weekly_diet_entries),
-        'water': sum(entry.water for entry in weekly_diet_entries),
+        'calories': sum(entry.calories or 0 for entry in weekly_diet_entries),
+        'carbohydrates': sum(entry.carbohydrates or 0 for entry in weekly_diet_entries),
+        'protein': sum(entry.protein or 0 for entry in weekly_diet_entries),
+        'water': sum(entry.water or 0 for entry in weekly_diet_entries),
     }
 
-    # All-time intake
     all_time_diet_entries = Diet.objects.filter(user=user)
     all_time_totals = {
-        'calories': sum(entry.calories for entry in all_time_diet_entries),
-        'carbohydrates': sum(entry.carbohydrates for entry in all_time_diet_entries),
-        'protein': sum(entry.protein for entry in all_time_diet_entries),
-        'water': sum(entry.water for entry in all_time_diet_entries),
+        'calories': sum(entry.calories or 0 for entry in all_time_diet_entries),
+        'carbohydrates': sum(entry.carbohydrates or 0 for entry in all_time_diet_entries),
+        'protein': sum(entry.protein or 0 for entry in all_time_diet_entries),
+        'water': sum(entry.water or 0 for entry in all_time_diet_entries),
     }
 
     context = {
@@ -71,16 +73,21 @@ def calory_track(request):
     }
 
     return render(request, 'fitness_app/calory_track.html', context)
-
 @login_required
 def add_diet_entry(request):
     if request.method == 'POST':
         form = DietForm(request.POST)
         if form.is_valid():
-            diet_entry = form.save(commit=False)
-            diet_entry.user = request.user
-            diet_entry.save()
-            return redirect('calory_track')  # Redirect to the calorie tracking page or another page
+            try:
+                diet_entry = form.save(commit=False)
+                diet_entry.user = request.user
+                diet_entry.save()
+                return redirect('calory_track')
+            except Exception as e:
+                logger.error(f"Error saving diet entry: {str(e)}")
+                messages.error(request, "An error occurred while saving your diet entry. Please try again.")
+        else:
+            logger.error(f"Form validation errors: {form.errors}")
     else:
         form = DietForm()
     return render(request, 'fitness_app/add_diet_entry.html', {'form': form})
