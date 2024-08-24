@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Nutritional Intake</h2>
+
+    <h3>Weekly Intake</h3>
+    <ul>
+        <li>Calories: {{ weekly_totals.calories }} kcal</li>
+        <li>Carbohydrates: {{ weekly_totals.carbohydrates }} g</li>
+        <li>Protein: {{ weekly_totals.protein }} g</li>
+        <li>Water: {{ weekly_totals.water }} ml</li>
+    </ul>
+
+    <h3>All-Time Intake</h3>
+    <ul>
+        <li>Calories: {{ all_time_totals.calories }} kcal</li>
+        <li>Carbohydrates: {{ all_time_totals.carbohydrates }} g</li>
+        <li>Protein: {{ all_time_totals.protein }} g</li>
+        <li>Water: {{ all_time_totals.water }} ml</li>
+    </ul>
+</div>
+{% endblock %}
+ 

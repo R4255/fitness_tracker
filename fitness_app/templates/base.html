@@ -28,6 +28,9 @@
                         <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'calory_track' %}">Calory Track</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'add_workout' %}">Add Workout</a>
                     </li>
                     {% if user.is_authenticated %}

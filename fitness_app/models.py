@@ -12,12 +12,14 @@ class Workout(models.Model):
         return self.name
 class Diet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    calories = models.IntegerField()
     date = models.DateField()
+    calories = models.PositiveIntegerField()
+    carbohydrates = models.PositiveIntegerField()  # in grams
+    protein = models.PositiveIntegerField()        # in grams
+    water = models.PositiveIntegerField()          # in milliliters
 
     def __str__(self):
-        return self.name
+        return f"{self.user.username} - {self.date}"
 class Goal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField()
