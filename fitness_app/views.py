@@ -44,7 +44,7 @@ def calculate_bmi(request):
 @login_required
 def calory_track(request):
     user = request.user
-    today = timezone.now().date()
+    today = timezone.localtime().date()
     week_start = today - timedelta(days=today.weekday())  # Monday of the current week
 
     # Weekly intake
