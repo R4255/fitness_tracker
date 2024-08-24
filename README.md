@@ -86,7 +86,7 @@ This project is licensed under the MIT License
 
 ```
 
-This README provides a good overview of your project, including its features, tech stack, and setup instructions. It's designed to be informative and welcoming to potential contributors or users of your project.
+
 
 
 SOME Screenshots of the website 
