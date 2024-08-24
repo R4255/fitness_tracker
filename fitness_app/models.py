@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Workout(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     date = models.DateField()
     duration = models.DurationField()
     def __str__(self):
