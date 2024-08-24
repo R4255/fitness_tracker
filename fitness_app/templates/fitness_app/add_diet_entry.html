@@ -6,7 +6,32 @@
     <h2>Add Diet Entry</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        
+        <div class="form-group">
+            <label for="id_date">Date</label>
+            <input type="text" name="date" placeholder="dd-mm-yyyy" id="id_date" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="id_calories">Calories</label>
+            <input type="number" name="calories" placeholder="kcal" id="id_calories" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="id_carbohydrates">Carbohydrates</label>
+            <input type="number" name="carbohydrates" placeholder="grams" id="id_carbohydrates" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="id_protein">Protein</label>
+            <input type="number" name="protein" placeholder="grams" id="id_protein" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="id_water">Water</label>
+            <input type="number" name="water" placeholder="ml" id="id_water" class="form-control">
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
