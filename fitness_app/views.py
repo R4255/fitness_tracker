@@ -47,32 +47,42 @@ def calculate_bmi(request):
 # Remove the custom signup view as it's now handled by allauth
 @login_required
 def calory_track(request):
-    user = request.user
-    today = timezone.localtime().date()
-    week_start = today - timedelta(days=today.weekday())
+    try:
+        user = request.user
+        today = timezone.localtime().date()
+        week_start = today - timedelta(days=today.weekday())
 
-    weekly_diet_entries = Diet.objects.filter(user=user, date__gte=week_start)
-    weekly_totals = {
-        'calories': sum(entry.calories or 0 for entry in weekly_diet_entries),
-        'carbohydrates': sum(entry.carbohydrates or 0 for entry in weekly_diet_entries),
-        'protein': sum(entry.protein or 0 for entry in weekly_diet_entries),
-        'water': sum(entry.water or 0 for entry in weekly_diet_entries),
-    }
+        weekly_diet_entries = Diet.objects.filter(user=user, date__gte=week_start)
+        logger.info(f"Weekly entries count: {weekly_diet_entries.count()}")
 
-    all_time_diet_entries = Diet.objects.filter(user=user)
-    all_time_totals = {
-        'calories': sum(entry.calories or 0 for entry in all_time_diet_entries),
-        'carbohydrates': sum(entry.carbohydrates or 0 for entry in all_time_diet_entries),
-        'protein': sum(entry.protein or 0 for entry in all_time_diet_entries),
-        'water': sum(entry.water or 0 for entry in all_time_diet_entries),
-    }
+        weekly_totals = {
+            'calories': sum(entry.calories or 0 for entry in weekly_diet_entries),
+            'carbohydrates': sum(entry.carbohydrates or 0 for entry in weekly_diet_entries),
+            'protein': sum(entry.protein or 0 for entry in weekly_diet_entries),
+            'water': sum(entry.water or 0 for entry in weekly_diet_entries),
+        }
+        logger.info(f"Weekly totals: {weekly_totals}")
 
-    context = {
-        'weekly_totals': weekly_totals,
-        'all_time_totals': all_time_totals,
-    }
+        all_time_diet_entries = Diet.objects.filter(user=user)
+        logger.info(f"All-time entries count: {all_time_diet_entries.count()}")
 
-    return render(request, 'fitness_app/calory_track.html', context)
+        all_time_totals = {
+            'calories': sum(entry.calories or 0 for entry in all_time_diet_entries),
+            'carbohydrates': sum(entry.carbohydrates or 0 for entry in all_time_diet_entries),
+            'protein': sum(entry.protein or 0 for entry in all_time_diet_entries),
+            'water': sum(entry.water or 0 for entry in all_time_diet_entries),
+        }
+        logger.info(f"All-time totals: {all_time_totals}")
+
+        context = {
+            'weekly_totals': weekly_totals,
+            'all_time_totals': all_time_totals,
+        }
+
+        return render(request, 'fitness_app/calory_track.html', context)
+    except Exception as e:
+        logger.error(f"Error in calory_track view: {str(e)}", exc_info=True)
+        return HttpResponse("An error occurred. Please try again later.", status=500)
 @login_required
 def add_diet_entry(request):
     if request.method == 'POST':
