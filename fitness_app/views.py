@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Workout,Diet
-from .forms import WorkoutForm
+from .forms import WorkoutForm,DietForm
 from django.http import HttpResponse
 from datetime import timedelta
 from django.utils import timezone
@@ -71,3 +71,16 @@ def calory_track(request):
     }
 
     return render(request, 'fitness_app/calory_track.html', context)
+
+@login_required
+def add_diet_entry(request):
+    if request.method == 'POST':
+        form = DietForm(request.POST)
+        if form.is_valid():
+            diet_entry = form.save(commit=False)
+            diet_entry.user = request.user
+            diet_entry.save()
+            return redirect('calory_track')  # Redirect to the calorie tracking page or another page
+    else:
+        form = DietForm()
+    return render(request, 'fitness_app/add_diet_entry.html', {'form': form})
