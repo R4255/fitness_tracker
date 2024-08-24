@@ -13,10 +13,10 @@ class Workout(models.Model):
 class Diet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
-    calories = models.IntegerField()
-    carbohydrates = models.IntegerField()  # in grams
-    protein = models.IntegerField()        # in grams
-    water = models.IntegerField()          # in milliliters
+    calories = models.IntegerField(default=0)
+    carbohydrates = models.IntegerField(default=0)  # in grams
+    protein = models.IntegerField(default=0)        # in grams
+    water = models.IntegerField(default=0)          # in milliliters
 
     def __str__(self):
         return f"{self.user.username} - {self.date}"
